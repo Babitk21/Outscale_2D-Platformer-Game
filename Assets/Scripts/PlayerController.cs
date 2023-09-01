@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,23 +9,34 @@ public class PlayerController : MonoBehaviour
     const string SPEED = "Speed";
     const string CROUCH = "Crouch";
     const string JUMP = "Jump";
+
+    [SerializeField] private float speed;
     private void Start() {
         animator = GetComponent<Animator>();
     }
     private void Update() {
-        float speed = Input.GetAxisRaw("Horizontal");
+        float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        animator.SetFloat(SPEED, Mathf.Abs(speed));
-        Vector3 scale = transform.localScale;
-        if(speed < 0) {
-            scale.x = -1f * Mathf.Abs(scale.x);
-        }
-        else if(speed > 0){
-            scale.x = Mathf.Abs(speed);
-        }
-        transform.localScale = scale;
         Crouch();
         Jump(vertical);
+        MoveHorizontal(horizontal);
+        HorizontalAnim(horizontal);
+    }
+    private void HorizontalAnim(float horizontal) {
+        animator.SetFloat(SPEED, Mathf.Abs(horizontal));
+        Vector3 scale = transform.localScale;
+        if (horizontal < 0) {
+            scale.x = -1f * Mathf.Abs(scale.x);
+        }
+        else if (horizontal > 0) {
+            scale.x = Mathf.Abs(horizontal);
+        }
+        transform.localScale = scale;
+    }
+    private void MoveHorizontal(float horizontal) {
+        Vector2 position = transform.position;
+        position.x += horizontal * speed * Time.deltaTime;
+        transform.position = position;
     }
     private void Crouch() {
         if (Input.GetKey(KeyCode.LeftControl)) {
@@ -36,7 +48,6 @@ public class PlayerController : MonoBehaviour
     }
     private void Jump(float vertical) {
         if (vertical > 0) {
-            Debug.Log("Here");
             animator.SetBool(JUMP, true);
         }
         else {
