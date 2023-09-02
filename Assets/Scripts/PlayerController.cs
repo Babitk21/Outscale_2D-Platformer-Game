@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -56,7 +57,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxisRaw("Jump") > 0 && isGrounded) {
             animator.SetBool(JUMP, true);
             rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            isGrounded = false;
         }
         else {
             animator.SetBool(JUMP, false);
@@ -67,5 +67,11 @@ public class PlayerController : MonoBehaviour
             Debug.Log("here");
             isGrounded = true;
         }
+        else if(collision.transform.CompareTag("Finish")) {
+            SceneManager.LoadScene(1);
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision) {
+        isGrounded = false;
     }
 }
