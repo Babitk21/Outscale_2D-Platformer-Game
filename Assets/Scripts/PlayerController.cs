@@ -70,6 +70,9 @@ public class PlayerController : MonoBehaviour
         else if(collision.transform.CompareTag("Finish")) {
             SceneManager.LoadScene(1);
         }
+        else if(collision.transform.CompareTag("FallCollider")) {
+            SceneManager.LoadScene(0);
+        }
     }
     private void OnCollisionExit2D(Collision2D collision) {
         isGrounded = false;
