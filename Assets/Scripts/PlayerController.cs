@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
+    [SerializeField] private ScoreController scoreController;
     
     Animator animator;
     Rigidbody2D rb;
@@ -28,6 +29,9 @@ public class PlayerController : MonoBehaviour
         Jump();
         MoveHorizontal(horizontal);
         HorizontalAnim(horizontal);
+    }
+    public void PickUpKey() {
+        scoreController.IncrementScore(10);
     }
     private void HorizontalAnim(float horizontal) {
         animator.SetFloat(SPEED, Mathf.Abs(horizontal));
