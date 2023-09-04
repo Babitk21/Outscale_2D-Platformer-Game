@@ -79,8 +79,8 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene(0);
         }
         else if(collision.gameObject.GetComponent<EnemyController>()) {
-            HealthManager.health--;
-            if(HealthManager.health <= 0) {
+            HealthManager.instance.health--;
+            if(HealthManager.instance.health <= 0) {
                 animator.SetTrigger(DEAD);
             }
         }
