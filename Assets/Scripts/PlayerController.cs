@@ -6,13 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    const string SPEED = "Speed";
-    const string CROUCH = "Crouch";
-    const string JUMP = "Jump";
+    private const string SPEED = "Speed";
+    private const string CROUCH = "Crouch";
+    private const string JUMP = "Jump";
+    private const string DEAD = "Dead";
 
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
     [SerializeField] private ScoreController scoreController;
+    [SerializeField] List<Transform> hp;
     
     Animator animator;
     Rigidbody2D rb;
@@ -68,7 +70,6 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision) {
         if(collision.transform.CompareTag("Ground")) {
-            Debug.Log("here");
             isGrounded = true;
         }
         else if(collision.transform.CompareTag("Finish")) {
@@ -77,8 +78,17 @@ public class PlayerController : MonoBehaviour
         else if(collision.transform.CompareTag("FallCollider")) {
             SceneManager.LoadScene(0);
         }
+        else if(collision.gameObject.GetComponent<EnemyController>()) {
+            HealthManager.health--;
+            if(HealthManager.health <= 0) {
+                animator.SetTrigger(DEAD);
+            }
+        }
     }
     private void OnCollisionExit2D(Collision2D collision) {
         isGrounded = false;
+    }
+    public void IsDead() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
