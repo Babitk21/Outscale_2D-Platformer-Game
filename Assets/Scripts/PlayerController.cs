@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
     [SerializeField] private ScoreController scoreController;
-    [SerializeField] List<Transform> hp;
+    [SerializeField] GameObject restartButton;
     
     Animator animator;
     Rigidbody2D rb;
@@ -82,13 +82,11 @@ public class PlayerController : MonoBehaviour
             HealthManager.instance.health--;
             if(HealthManager.instance.health <= 0) {
                 animator.SetTrigger(DEAD);
+                restartButton.SetActive(true);
             }
         }
     }
     private void OnCollisionExit2D(Collision2D collision) {
         isGrounded = false;
-    }
-    public void IsDead() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

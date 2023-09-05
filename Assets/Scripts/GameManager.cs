@@ -11,5 +11,8 @@ public class GameManager : MonoBehaviour
     public void QuitButtonPressed() {
         SceneManager.LoadScene(0);
     }
+    public void RestartButtonPressed() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
         
 }
