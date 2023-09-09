@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject lobbyObject;
     public void PlayButtonPressed() {
         lobbyObject.SetActive(true);
+        AudioManager.instance.Play("StartClick");
     }
     public void QuitButtonPressed() {
         SceneManager.LoadScene(0);
