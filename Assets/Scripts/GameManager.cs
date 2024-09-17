@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject lobbyObject;
     public void PlayButtonPressed() {
-        SceneManager.LoadScene(1);
+        lobbyObject.SetActive(true);
+        AudioManager.instance.Play("StartClick");
     }
     public void QuitButtonPressed() {
         SceneManager.LoadScene(0);
