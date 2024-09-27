@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject lobbyObject;
     public void PlayButtonPressed() {
-        SceneManager.LoadScene(1);
+        lobbyObject.SetActive(true);
     }
     public void QuitButtonPressed() {
         SceneManager.LoadScene(0);
